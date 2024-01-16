@@ -38,10 +38,9 @@ router.get("/:id" ,verifyAdmin, GetHotel);
 
 /* !!!!!!!!!!!!!!!!!!! @GET  HOTEL !!!!!!!!!!!!!!!!!!!!! */
 router.get("/countByCity", countByCity);
-router.get("/GetHote",verifyAdmin, GetALLHote);
-router.get("/" ,verifyAdmin,GetALLHotel);
-router.get("/countByType" ,verifyAdmin,GetALLHotel);
+router.get("/countByType" ,GetALLHotel);
 
- 
+router.get("/h" ,verifyAdmin,GetALLHotel);
+
 
 export default router;

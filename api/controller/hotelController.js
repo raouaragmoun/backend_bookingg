@@ -35,7 +35,6 @@ export const UpdateHotel = async (req,res,next)=>{
 
  };
 
-
  export const GetHotel = async (req,res,next)=>{
 
     const hotel =await  Hotel.findById(
@@ -50,17 +49,16 @@ export const UpdateHotel = async (req,res,next)=>{
 
  };
 
- 
 
  export const countByCity = async (req, res, next) => {
-    const hotel =await  Hotel.findById(
-        req.params.id,
-       );
-        try{
-            res.status(200).json(hotel);
-        }catch(err){
-        
-       next(err);
+    const cities= req.query.cities.split(",")
+    try{
+        const list = await Promise.all(cities.map(city=>{
+            return Hotel.countDocuments({ city : city })
+        }))
+            res.status(200).json(list);
+    }catch(err){
+        next(err);
     }
 };
 
