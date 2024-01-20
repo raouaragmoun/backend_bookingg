@@ -1,7 +1,7 @@
 import  Express  from "express";
 import  Hotel  from "../models/Hotel.js";
 import { createError } from "../utils/error.js";
-import { GetALLHote, GetALLHotel, GetHotel, UpdateHotel, countByCity, createHotel, deleteHotel } from "../controller/hotelController.js";
+import { GetALLHote, GetALLHotel, GetHotel, GetHotelRoom, UpdateHotel, countByCity, countByType, createHotel, deleteHotel } from "../controller/hotelController.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
 
 
@@ -14,11 +14,15 @@ const router = Express.Router();
  * GET
  * GETALL
  * **************************** */
+router.get("/countByType" ,countByType);
 
+router.get("/countByCity", countByCity);
+
+router.get("/room/:id", GetHotelRoom);
 
 /* !!!!!!!!!!!!!!!!!!! @ADD HOTEL !!!!!!!!!!!!!!!!!!!!! */
-
-router.post("/" ,verifyAdmin, createHotel );
+router.get("/h" ,GetALLHotel);
+router.post("/" , createHotel );
 
 /* !!!!!!!!!!!!!!!!!!! @UPDATE HOTEL !!!!!!!!!!!!!!!!!!!!! */
 
@@ -33,14 +37,13 @@ router.delete("/:id" ,verifyAdmin, deleteHotel);
 
 /* !!!!!!!!!!!!!!!!!!! @GET BYID HOTEL !!!!!!!!!!!!!!!!!!!!! */
 
-router.get("/:id" ,verifyAdmin, GetHotel);
+router.get("/:id" , GetHotel);
 
 
 /* !!!!!!!!!!!!!!!!!!! @GET  HOTEL !!!!!!!!!!!!!!!!!!!!! */
-router.get("/countByCity", countByCity);
-router.get("/countByType" ,GetALLHotel);
 
-router.get("/h" ,verifyAdmin,GetALLHotel);
+
+
 
 
 export default router;

@@ -6,6 +6,7 @@ import houtelRoutr from "./routes/hotes.js";
 import roomsRoutr from "./routes/rooms.js";
 import userRoutr from "./routes/user.js";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 const app=Express();
 
 dotenv.config();
@@ -37,7 +38,7 @@ mongoose.connection.on("connected",()=>{
 });
 
 
-
+app.use( cors());
 app.use(cookieParser());
 app.use(Express.json());
 /*****************API Router***************** */
@@ -46,17 +47,15 @@ app.use("/api/users", userRoutr);
 app.use("/api/hotel", houtelRoutr);
 app.use("/api/rooms", roomsRoutr);
 
-app.use((err ,req,res,next)=>{
-    const errorStatus = err.status || 500
-    const errorMessage = err.message ||" Somthing went wrong § "
-return res.status(500).json({
-    sucess:false,
-    status: errorStatus,
-    message:errorMessage,
-    stack: err.stack
-
-})  
-});
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.status || 500).json({
+      success: false,
+      message: err.message || "Something went wrong!",
+      stack: err.stack,
+    });
+  });
+  
 
 /***************************************** */
 

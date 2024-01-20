@@ -5,9 +5,9 @@ import { createError } from "../utils/error.js";
 
 export const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email }); // Await here
+    const user = await User.findOne({ username: req.body.username }); // Await here
 
-    if (!user) return next(createError(404, "Email not found"));
+    if (!user) return next(createError(404, "user not found"));
 
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
